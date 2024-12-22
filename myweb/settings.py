@@ -27,18 +27,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 from decouple import config
 
 SECRET_KEY = config('SECRET_KEY')
-def get_random_image_url(query):
-    api_key = config('PEXELS_API_KEY')
-    url = f'https://api.pexels.com/v1/search?query={query}&per_page=1'
-    headers = {'Authorization': api_key}
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 200:
-        data = response.json()
-        if data['photos']:
-            return data['photos'][0]['src']['original']
-    return None
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
