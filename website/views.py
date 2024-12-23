@@ -28,3 +28,11 @@ def nonveg(request):
 
 def login(request):
     return render(request, 'login.html')
+
+def food_items_by_category(request, is_veg):
+    food_items = FoodItem.objects.filter(category__is_veg=is_veg)
+    context = {
+        'food_items': food_items,
+        'category': "Veg" if is_veg else "Non-Veg",
+    }
+    return render(request, 'food_items.html', context)

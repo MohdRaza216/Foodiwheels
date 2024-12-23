@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category }} Food Items</title>
+</head>
+<body>
+    {% block content %}
+    <h1>{{ category }} Food Menu</h1>
+    <div>
+        {% for food in food_items %}
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+                <h2>{{ food.name }}</h2>
+                <p><strong>Category:</strong> {{ food.category.name }}</p>
+                <p><strong>Description:</strong> {{ food.description }}</p>
+                <p><strong>Price:</strong> Rs.{{ food.price }}</p>
+                {% if food.image %}
+                    <img src="{{ food.image.url }}" alt="{{ food.name }}" style="max-width: 300px;">
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+</body>
+</html>
