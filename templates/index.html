@@ -51,25 +51,27 @@
               </li>
               <li class="nav-item dropdown">
                 <a
-                  class="nav-link dropdown-toggle"
+                  class="nav-link dropdown-toggle btn"
                   href="#"
-                  role="button"
+                  id="navbarDropdown"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  aria-haspopup="true"
+                  onkeydown="if(event.key === 'Enter' || event.key === ' ') { this.click(); }"
+                  tabindex="0"
                 >
                   Categories
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
                     <a class="dropdown-item" href="{% url 'food_veg' %}">Veg</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="{% url 'food_nonveg' %}"
-                      >Non-Veg</a
-                    >
+                    <a class="dropdown-item" href="{% url 'food_nonveg' %}">Non-Veg</a>
                   </li>
                 </ul>
               </li>
+              
             </ul>
             <form class="d-flex" role="search">
               {% csrf_token %}

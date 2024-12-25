@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block content %}
+<header style="text-align: center; background-color: #6a1b9a; color: white; padding: 2rem; font-size: 2.5rem; font-weight: bold;">
+    Signup
+</header>
+<main style="display: flex; justify-content: center; align-items: center; background: #f3e5f5; min-height: 80vh; padding: 2rem;">
+    <form method="post" action="{% url 'signup' %}" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); width: 100%; max-width: 600px;">
+        {% csrf_token %}
+        <h2 style="color: #4a148c; text-align: center;">Create an Account</h2>
+        
+        <label for="username" style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #4a148c;">Username:</label>
+        <input type="text" id="username" name="username" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
+
+        <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #4a148c;">Email:</label>
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
+
+        <label for="password" style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #4a148c;">Password:</label>
+        <input type="password" id="password" name="password" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
+
+        <label for="confirm_password" style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #4a148c;">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
+
+        <button type="submit" style="width: 100%; padding: 0.75rem; background-color: #8e24aa; color: white; border: none; border-radius: 4px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s ease;">Signup</button>
+    </form>
+</main>
+{% endblock %}
