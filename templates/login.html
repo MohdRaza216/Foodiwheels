@@ -9,6 +9,14 @@
         {% csrf_token %}
         <h2 style="color: #4a148c; text-align: center;">Login to Your Account</h2>
         
+        {% if messages %}
+        <div style="color: red; margin-top: 1rem; text-align: center;">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <label for="username" style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #4a148c;">Username:</label>
         <input type="text" id="username" name="username" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
 
@@ -16,6 +24,13 @@
         <input type="password" id="password" name="password" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
 
         <button type="submit" style="width: 100%; padding: 0.75rem; background-color: #8e24aa; color: white; border: none; border-radius: 4px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s ease;">Login</button>
+
+        <p style="text-align: center; margin-top: 1rem;">
+            <a href="{% url 'password_reset' %}" style="color: #6a1b9a; text-decoration: none;">Forgot Password?</a>
+        </p>
+        <p style="text-align: center; margin-top: 1rem;">
+            Don't have an account? <a href="{% url 'signup' %}" style="color: #6a1b9a; text-decoration: none;">Sign up here</a>.
+        </p>
     </form>
 </main>
 {% endblock %}

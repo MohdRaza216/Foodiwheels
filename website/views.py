@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-import requests
-from decouple import config
 from .models import FoodItem, Category
-from django.core.mail import send_mail
 from .models import Message
 import re
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -62,10 +61,6 @@ def submit_contact(request):
 
     return HttpResponse("Invalid request.")
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib import messages
 
 def signup_view(request):
     if request.method == "POST":
@@ -98,7 +93,7 @@ def login_view(request):
 
         # Authenticate user
         user = authenticate(request, username=username, password=password)
-        if user:
+        if user is not None:
             login(request, user)
             messages.success(request, "Login successful!")
             return redirect('/')

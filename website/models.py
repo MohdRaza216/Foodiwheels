@@ -37,20 +37,3 @@ class FoodItem(models.Model):
 
     class Meta:
         ordering = ['name']
-
-def submit_contact(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        phone = request.POST.get("phone")
-        desc = request.POST.get("message")
-
-        Message.objects.create(
-            name=name,
-            email=email,
-            phone=phone,
-            desc=desc
-        )
-
-        return redirect("thank_you")  # Create a 'thank_you' page
-    return HttpResponse("Invalid request.")
