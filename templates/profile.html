@@ -1,0 +1,69 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+<header style="text-align: center; background-color: #8e24aa; color: white; padding: 2rem; font-size: 2.5rem; font-weight: bold; border-bottom: 4px solid #6a1b9a;">
+    User Profile
+</header>
+
+<main style="display: flex; justify-content: center; align-items: center; background: #f3e5f5; min-height: 80vh; padding: 2rem;">
+    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); width: 100%; max-width: 650px;">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Profile Picture Section -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile_Pic" style="max-width: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                {% else %}
+                    <img src="{% static 'default_profile.png' %}" alt="Default Profile" style="max-width: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                {% endif %}
+            </div>
+
+            <!-- Form Fields -->
+            <div style="margin-bottom: 1.5rem;">
+                <label for="username" style="font-size: 1rem; color: #333;">Username</label>
+                {{ form.username }}
+                <div style="color: red; font-size: 0.875rem;">{{ form.username.errors }}</div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label for="email" style="font-size: 1rem; color: #333;">Email</label>
+                {{ form.email }}
+                <div style="color: red; font-size: 0.875rem;">{{ form.email.errors }}</div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label for="first_name" style="font-size: 1rem; color: #333;">First Name</label>
+                {{ form.first_name }}
+                <div style="color: red; font-size: 0.875rem;">{{ form.first_name.errors }}</div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label for="last_name" style="font-size: 1rem; color: #333;">Last Name</label>
+                {{ form.last_name }}
+                <div style="color: red; font-size: 0.875rem;">{{ form.last_name.errors }}</div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label for="profile_picture" style="font-size: 1rem; color: #333;">Change Profile Picture</label>
+                {{ form.profile_picture }}
+                <div style="color: red; font-size: 0.875rem;">{{ form.profile_picture.errors }}</div>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="margin-bottom: 2rem;">
+                <button type="submit" style="width: 100%; padding: 1rem; background-color: #8e24aa; color: white; border: none; border-radius: 4px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s ease;">
+                    Save Changes
+                </button>
+            </div>
+
+            <!-- Back Button -->
+            <div style="text-align: center;">
+                <a href="{% url 'profile_list' %}" style="font-size: 1rem; color: #8e24aa; text-decoration: none; font-weight: bold; transition: color 0.3s ease;">
+                    &lt; Back to Profile List
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

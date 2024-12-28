@@ -3,6 +3,7 @@ from website import views
 from . import views
 from django.shortcuts import render
 from django.contrib.auth import views as auth_views
+from .views import profile
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -10,7 +11,6 @@ urlpatterns = [
     path("about", views.about, name="about"),
     path("veg", views.veg, name="veg"),
     path("nonveg", views.nonveg, name="nonveg"),
-    path("login", views.login, name="login"),
     path("food/veg/", views.food_items_by_category, {"is_veg": True}, name="food_veg"),
     path(
         "food/nonveg/",
@@ -25,7 +25,7 @@ urlpatterns = [
         name="thank_you",
     ),
     path("signup/", views.signup_view, name="signup"),
-    path("login/", views.login_view, name="login"),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path("logout/", views.logout_view, name="logout"),
     path(
         "password-reset/", auth_views.PasswordResetView.as_view(), name="password_reset"
@@ -45,4 +45,6 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),
+    path('profile/', profile, name='profile'),
+    path('profiles/', views.profile_list, name='profile_list'),
 ]

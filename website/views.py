@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import FoodItem, Category
-from .models import Message
+from .models import Message, Profile
 import re
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from .forms import ProfileForm
 
 # Create your views here.
 def index(request):
@@ -107,3 +109,19 @@ def logout_view(request):
     logout(request)
     messages.success(request, "Logged out successfully!")
     return redirect('login')
+
+@login_required
+def profile(request):
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'profile.html', {'form': form})
+
+def profile_list(request):
+    profiles = Profile.objects.all()  # Get all profiles from the database
+    return render(request, 'profile_list.html', {'profiles': profiles})

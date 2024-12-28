@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<header style="text-align: center; background-color: #6a1b9a; color: white; padding: 2rem; font-size: 2.5rem; font-weight: bold;">
+    Profile List
+</header>
+
+<main style="padding: 2rem;">
+    <div style="background-color: #f3e5f5; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);">
+        <h2 style="font-size: 2rem; color: #333;">All User Profiles</h2>
+
+        {% if profiles %}
+            <ul style="list-style: none; padding: 0;">
+                {% for profile in profiles %}
+                    <li style="padding: 1rem; border-bottom: 1px solid #ddd;">
+                        <div style="display: flex; align-items: center;">
+                            <img src="{{ profile.profile_picture.url }}" alt="Profile_Pic" style="max-width: 50px; border-radius: 50%; margin-right: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.5rem; color: #333;">{{ profile.user.username }}</h3>
+                                <p style="color: #555;">{{ profile.bio|default:"No bio available" }}</p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No profiles found.</p>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

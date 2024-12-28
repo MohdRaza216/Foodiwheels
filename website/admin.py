@@ -1,5 +1,5 @@
 from django.contrib import admin
-from website.models import Message, FoodItem, Category
+from website.models import Message, FoodItem, Category, Profile
 
 # Register your models here.
 
@@ -14,3 +14,4 @@ class FoodItemAdmin(admin.ModelAdmin):
 
 admin.site.register(FoodItem, FoodItemAdmin)
 admin.site.register(Category)
+admin.site.register(Profile)
