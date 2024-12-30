@@ -37,11 +37,14 @@ class FoodItem(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
+    bio = models.TextField( max_length=500, blank=True)
     phone = models.CharField(max_length=15, blank=True, default="0000000000")
     address = models.TextField(blank=True, default="No address provided")
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', default='default_profile.png')
+    profile_picture = models.ImageField(upload_to='profile_pictures/', default='default_profile.png', blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
+
 
     def __str__(self):
         return self.user.username

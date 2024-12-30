@@ -10,44 +10,23 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             
-            <!-- Profile Picture Section -->
+            <!-- Profile Picture -->
             <div style="text-align: center; margin-bottom: 2rem;">
                 {% if user.profile.profile_picture %}
                     <img src="{{ user.profile.profile_picture.url }}" alt="Profile_Pic" style="max-width: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                 {% else %}
-                    <img src="{% static 'default_profile.png' %}" alt="Default Profile" style="max-width: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                    <img src="{% static "images/kwai-nuxt-pwa-pc.jpeg" %}" alt="Default Profile_Pic" style="max-width: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                 {% endif %}
             </div>
 
-            <!-- Form Fields -->
-            <div style="margin-bottom: 1.5rem;">
-                <label for="username" style="font-size: 1rem; color: #333;">Username</label>
-                {{ form.username }}
-                <div style="color: red; font-size: 0.875rem;">{{ form.username.errors }}</div>
+            <!-- User Form -->
+            <div>
+                {{ user_form.as_p }}
             </div>
 
-            <div style="margin-bottom: 1.5rem;">
-                <label for="email" style="font-size: 1rem; color: #333;">Email</label>
-                {{ form.email }}
-                <div style="color: red; font-size: 0.875rem;">{{ form.email.errors }}</div>
-            </div>
-
-            <div style="margin-bottom: 1.5rem;">
-                <label for="first_name" style="font-size: 1rem; color: #333;">First Name</label>
-                {{ form.first_name }}
-                <div style="color: red; font-size: 0.875rem;">{{ form.first_name.errors }}</div>
-            </div>
-
-            <div style="margin-bottom: 1.5rem;">
-                <label for="last_name" style="font-size: 1rem; color: #333;">Last Name</label>
-                {{ form.last_name }}
-                <div style="color: red; font-size: 0.875rem;">{{ form.last_name.errors }}</div>
-            </div>
-
-            <div style="margin-bottom: 1.5rem;">
-                <label for="profile_picture" style="font-size: 1rem; color: #333;">Change Profile Picture</label>
-                {{ form.profile_picture }}
-                <div style="color: red; font-size: 0.875rem;">{{ form.profile_picture.errors }}</div>
+            <!-- Profile Form -->
+            <div>
+                {{ profile_form.as_p }}
             </div>
 
             <!-- Submit Button -->

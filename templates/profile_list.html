@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-
+{% load static %}
 {% block content %}
 <header style="text-align: center; background-color: #6a1b9a; color: white; padding: 2rem; font-size: 2.5rem; font-weight: bold;">
     Profile List
@@ -14,10 +14,22 @@
                 {% for profile in profiles %}
                     <li style="padding: 1rem; border-bottom: 1px solid #ddd;">
                         <div style="display: flex; align-items: center;">
-                            <img src="{{ profile.profile_picture.url }}" alt="Profile_Pic" style="max-width: 50px; border-radius: 50%; margin-right: 1rem;">
+                            {% if profile.profile_picture %}
+                                <img src="{{ profile.profile_picture.url }}" alt="Profile Pic" style="max-width: 50px; border-radius: 50%; margin-right: 1rem;">
+                            {% else %}
+                                <img src="{% static "images/kwai-nuxt-pwa-pc.jpeg" %}" alt="Default Profile Pic" style="max-width: 50px; border-radius: 50%; margin-right: 1rem;">
+                            {% endif %}
                             <div>
                                 <h3 style="font-size: 1.5rem; color: #333;">{{ profile.user.username }}</h3>
                                 <p style="color: #555;">{{ profile.bio|default:"No bio available" }}</p>
+                                <p style="color: #777;">Email: {{ profile.user.email }}</p>
+                                <p style="color: #777;">Phone: {{ profile.phone }}</p>
+                                {% if profile.address %}
+                                    <p style="color: #777;">Address: {{ profile.address }}</p>
+                                {% endif %}
+                                {% if profile.user == request.user or request.user.is_staff %}
+                                    <a href="{% url 'profile' %}" style="font-size: 0.9rem; color: #6a1b9a; text-decoration: none; font-weight: bold;">Edit Profile</a>
+                                {% endif %}
                             </div>
                         </div>
                     </li>
