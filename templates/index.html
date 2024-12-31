@@ -25,73 +25,69 @@
   <body>
     <div class="container-fluid px-0 mx-0 my-5">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-          <a class="navbar-brand" href="/">Foodiwheels</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+  <div class="container">
+    <a class="navbar-brand" href="/">Foodiwheels</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">Contact</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            data-bs-toggle="dropdown"
             aria-expanded="false"
-            aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">Contact</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle btn"
-                  href="#"
-                  id="navbarDropdown"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  onkeydown="if(event.key === 'Enter' || event.key === ' ') { this.click(); }"
-                  tabindex="0"
-                >
-                  Categories
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <a class="dropdown-item" href="{% url 'food_veg' %}">Veg</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url 'food_nonveg' %}">Non-Veg</a>
-                  </li>
-                </ul>
-                <li>
-                  <a href="{% url 'profile' %}">Profile</a>
-                </li>
-              </li>
-              
-            </ul>
-            <form class="d-flex" role="search">
-              {% csrf_token %}
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-            <a class="btn btn-primary mx-2" href="{% url 'signup' %}">Sign up</a>
-          </div>
-        </div>
-      </nav>
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" href="{% url 'food_veg' %}">Veg</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'food_nonveg' %}">Non-Veg</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+        </li>
+      </ul>
+
+      <form class="d-flex ms-auto me-3" role="search">
+        {% csrf_token %}
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <a class="btn btn-primary rounded-circle" href="{% url 'signup' %}">Sign up</a>
+    </div>
+  </div>
+</nav>
+
     </div>
     {% if messages %}
     <ul class="messages">
@@ -103,7 +99,7 @@
     {% block content %}
     <div class="p-4 p-md-5 mb-0 text-body-emphasis bg-info text-dark">
       <div class="col-lg-6 px-0">
-        <h1 class="display-4 fst-italic">Foodiwheels</h1>
+        <h1 class="display-4 fst-italic fw-bold">Foodiwheels</h1>
         <p class="lead my-3">
           The most delicious food of your LIFE is at our place.
           <br />Just one order away.
