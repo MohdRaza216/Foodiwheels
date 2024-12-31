@@ -2,13 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Message(models.Model):
-    name = models.CharField(max_length=100, blank=True, default="Default Name")
-    phone = models.CharField(max_length=15, blank=True, default="0000000000")
+    name = models.CharField(max_length=100, blank=True, default="Enter Your Name")
+    email = models.EmailField(unique=True, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, default="Enter Your Phone Number")
     desc = models.TextField(max_length=1000, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Message from {self.name or 'Unknown'}"
+
+    class Meta:
+        ordering = ['created_at']
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -41,10 +45,6 @@ class Profile(models.Model):
     phone = models.CharField(max_length=15, blank=True, default="0000000000")
     address = models.TextField(blank=True, default="No address provided")
     profile_picture = models.ImageField(upload_to='profile_pictures/', default='default_profile.png', blank=True, null=True)
-
-    def __str__(self):
-        return self.user.username
-
 
     def __str__(self):
         return self.user.username

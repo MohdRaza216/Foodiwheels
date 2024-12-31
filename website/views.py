@@ -7,11 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import ProfileForm, UserForm
+from .forms import ProfileForm, UserForm, MessageForm
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your views here.
 def index(request):
-    food_items = FoodItem.objects.all()
+    food_items = FoodItem.objects.select_related('category').all()
     return render(request, 'index.html', {'food_items': food_items})
 
 def contact(request):
@@ -20,48 +22,33 @@ def contact(request):
 def about(request):
     return render(request, 'about.html')
 
+FOOD_ITEMS_TEMPLATE = 'food_items.html'
+
 def veg(request):
-    veg_category = Category.objects.get(name='Veg')
+    try:
+        veg_category = Category.objects.get(name='Veg')
+    except Category.DoesNotExist:
+        return HttpResponse("Veg category not found.", status=404)
     food_items = FoodItem.objects.filter(category=veg_category)
-    return render(request, 'veg.html', {'food_items': food_items})
+    return render(request, FOOD_ITEMS_TEMPLATE, {'food_items': food_items, 'category': "Veg"})
+
 
 def nonveg(request):
-    nonveg_category = Category.objects.get(name='Non-Veg')
-    food_items = FoodItem.objects.filter(category=nonveg_category)
-    return render(request, 'nonveg.html', {'food_items': food_items})
+    try:
+        non_veg_category = Category.objects.get(name='Non-Veg')
+    except Category.DoesNotExist:
+        return HttpResponse("Non-Veg category not found.", status=404)
+    food_items = FoodItem.objects.filter(category=non_veg_category)
+    return render(request, FOOD_ITEMS_TEMPLATE, {'food_items': food_items, 'category': "Non-Veg"})
+
 
 
 def food_items_by_category(request, is_veg):
     food_items = FoodItem.objects.filter(category__is_veg=is_veg)
-    context = {
+    return render(request, 'food_items.html', {
         'food_items': food_items,
         'category': "Veg" if is_veg else "Non-Veg",
-    }
-    return render(request, 'food_items.html', context)
-
-def submit_contact(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        phone = request.POST.get("phone")
-        desc = request.POST.get("message")
-
-        # Validate the phone number (10-12 digits)
-        if not re.match(r'^\d{10,12}$', phone):
-            return HttpResponse("Invalid phone number. Please enter a valid 10-12 digit number.")
-
-        # Save the message to the database
-        Message.objects.create(
-            name=name,
-            email=email,
-            phone=phone,
-            desc=desc
-        )
-
-        # Redirect to the thank you page
-        return redirect("thank_you")
-
-    return HttpResponse("Invalid request.")
+    })
 
 
 def signup_view(request):
@@ -89,21 +76,18 @@ def signup_view(request):
     return render(request, 'signup.html')
 
 def login_view(request):
+    next_url = request.GET.get('next', '/')
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-
-        # Authenticate user
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user:
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('/')
-        else:
-            messages.error(request, "Invalid username or password.")
-            return redirect('login')
-
+            return redirect(next_url)
+        messages.error(request, "Invalid username or password.")
     return render(request, 'login.html')
+
 
 def logout_view(request):
     logout(request)
@@ -148,3 +132,22 @@ def profile_update(request):
         'profile_form': profile_form,
     }
     return render(request, 'profile.html', context)
+
+def submit_contact(request):
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("thank_you")
+        else:
+            return render(request, 'contact.html', {"form": form})
+    return redirect('contact')
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+def thank_you(request):
+    return render(request, 'thank_you.html')

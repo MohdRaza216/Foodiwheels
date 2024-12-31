@@ -87,3 +87,7 @@ body {
 .bg-body-tertiary {
     background-color: #e9ecef ;
 }
+.navbar-collapse {
+    flex-grow: 1;
+    justify-content: flex-end;
+}

@@ -41,13 +41,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
+                <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/contact">Contact</a>
+                <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">Contact</a>
               </li>
               <li class="nav-item dropdown">
                 <a
@@ -93,6 +93,13 @@
         </div>
       </nav>
     </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="alert {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% block content %}
     <div class="p-4 p-md-5 mb-0 text-body-emphasis bg-info text-dark">
       <div class="col-lg-6 px-0">
@@ -132,6 +139,7 @@
                   src="{% static 'images/pexels-1155579-2871755.jpg' %}"
                   alt="Spiced Grilled Lamb Chops"
                   class="rounded-top"
+                  loading="lazy"
                 />
                 <div class="card-body">
                   <h1>Spiced Grilled Lamb Chops</h1>
@@ -164,6 +172,7 @@
                   src="{% static 'images/pexels-enginakyurt-1527603.jpg' %}"
                   alt="Rustic Pasta with Beans and Herbs"
                   class="rounded-top"
+                  loading="lazy"
                 />
                 <div class="card-body">
                   <h1>Rustic Pasta with Beans and Herbs</h1>
@@ -195,6 +204,7 @@
                   src="{% static 'images/pexels-h-h-227297-775863.jpg' %}"
                   alt="Spicy Alaskan King Crab"
                   class="rounded-top"
+                  loading="lazy"
                 />
                 <div class="card-body">
                   <h1>Spicy Alaskan King Crab</h1>
@@ -226,6 +236,7 @@
                   src="{% static 'images/pexels-pablo-macedo-287472-845798.jpg' %}"
                   alt="Mediterranean Delight Pizza"
                   class="rounded-top"
+                  loading="lazy"
                 />
                 <div class="card-body">
                   <h1>Mediterranean Delight Pizza</h1>
@@ -257,6 +268,7 @@
                   src="{% static 'images/pexels-snapwire-675951.jpg' %}"
                   alt="Seared Steak with Herb-Roasted Vegetables"
                   class="rounded-top"
+                  loading="lazy"
                 />
                 <div class="card-body">
                   <h1>Seared Steak with Herb-Roasted Vegetables</h1>
@@ -289,6 +301,7 @@
                   src="{% static 'images/pexels-tonyleong81-2092906.jpg' %}"
                   alt="Aglio e Olio with Shrimp"
                   class="rounded-top"
+                  loading="lazy"
                 />
                 <div class="card-body">
                   <h1>Aglio e Olio with Shrimp</h1>
