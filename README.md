@@ -1,4 +1,3 @@
-
 # **Foodiwheels**
 
 Welcome to **Foodiwheels** — an exciting online food ordering platform designed to offer a variety of cuisines at your fingertips. Whether you're looking for a quick bite or planning a feast, Foodiwheels provides a seamless experience for browsing, filtering, and purchasing food items. 
@@ -40,6 +39,16 @@ Built with **Django** for the backend and **PostgreSQL** for the database, this 
 
 ### **Database:**
 - PostgreSQL
+
+### **Hosting:**
+- **Frontend & Backend**: Vercel
+
+---
+
+## **Deployment**
+
+Foodiwheels is live! Visit the website here:  
+👉 **[Foodiwheels on Vercel](https://foodiwheels.vercel.app/)**
 
 ---
 
@@ -156,5 +165,3 @@ For any inquiries or feedback, feel free to reach out:
 ---
 
 Thank you for visiting **Foodiwheels**! 🍔🍟🍲 Enjoy your meal and happy ordering!
-
----
