@@ -47,4 +47,5 @@ urlpatterns = [
     ),
     path("profile/", views.profile_update, name="profile"),
     path("profiles/", views.profile_list, name="profile_list"),
+    path("upload-image/", views.upload_food_image, name="upload_food_image"),
 ]

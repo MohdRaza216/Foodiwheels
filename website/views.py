@@ -10,6 +10,8 @@ from django.contrib import messages
 from .forms import ProfileForm, UserForm, MessageForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.http import JsonResponse
+from .utils.cloudinary_service import upload_image
 
 # Create your views here.
 def index(request):
@@ -151,3 +153,12 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 def thank_you(request):
     return render(request, 'thank_you.html')
+
+def upload_food_image(request):
+    if request.method == "POST" and request.FILES.get("image"):
+        image = request.FILES["image"]
+        uploaded_url = upload_image(image)
+        if uploaded_url:
+            return JsonResponse({"success": True, "url": uploaded_url})
+        return JsonResponse({"success": False, "message": "Image upload failed."})
+    return JsonResponse({"success": False, "message": "No image provided."})
